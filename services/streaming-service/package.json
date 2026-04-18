@@ -1,0 +1,15 @@
+{
+  "name": "streaming-service",
+  "version": "1.0.0",
+  "description": "HLS video streaming microservice for Spotifake",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}

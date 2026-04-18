@@ -1,0 +1,8 @@
+apiVersion: v2
+name: spotifake
+description: Helm chart for Spotifake video streaming platform (3 microservices)
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+maintainers:
+  - name: Oswaldo
