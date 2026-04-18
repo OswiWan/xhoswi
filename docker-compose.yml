@@ -1,8 +1,8 @@
 services:
   auth-service:
     build: ./services/auth-service
-    image: spotifake/auth-service:latest
-    container_name: spotifake-auth
+    image: xhoswi/auth-service:latest
+    container_name: xhoswi-auth
     ports:
       - "3001:3001"
     environment:
@@ -12,8 +12,8 @@ services:
 
   catalog-service:
     build: ./services/catalog-service
-    image: spotifake/catalog-service:latest
-    container_name: spotifake-catalog
+    image: xhoswi/catalog-service:latest
+    container_name: xhoswi-catalog
     ports:
       - "3002:3002"
     environment:
@@ -23,8 +23,8 @@ services:
 
   streaming-service:
     build: ./services/streaming-service
-    image: spotifake/streaming-service:latest
-    container_name: spotifake-streaming
+    image: xhoswi/streaming-service:latest
+    container_name: xhoswi-streaming
     ports:
       - "3003:3003"
     environment:

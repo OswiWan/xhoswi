@@ -21,7 +21,7 @@ export default function Catalog({ user, onLogout }) {
   return (
     <div className="catalog">
       <header className="catalog-header">
-        <h1>🎬 Spotifake</h1>
+        <h1>🎬 Xhoswi</h1>
         <div>
           <span>👤 {user}</span>
           <button onClick={onLogout}>Salir</button>

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: catalog-service
-  namespace: spotifake
+  namespace: xhoswi
 spec:
   replicas: 2
   selector:
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: catalog-service
-          image: spotifake/catalog-service:latest
+          image: xhoswi/catalog-service:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3002
@@ -39,7 +39,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: catalog-service
-  namespace: spotifake
+  namespace: xhoswi
 spec:
   type: NodePort
   selector:

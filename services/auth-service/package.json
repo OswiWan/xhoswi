@@ -1,7 +1,7 @@
 {
   "name": "auth-service",
   "version": "1.0.0",
-  "description": "Authentication microservice for Spotifake streaming platform",
+  "description": "Authentication microservice for Xhoswi streaming platform",
   "main": "src/index.js",
   "type": "module",
   "scripts": {

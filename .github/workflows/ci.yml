@@ -73,7 +73,7 @@ jobs:
           version: latest
 
       - name: Lint Helm chart
-        run: helm lint k8s/charts/spotifake
+        run: helm lint k8s/charts/xhoswi
 
       - name: Render Helm templates (dry-run)
-        run: helm template spotifake k8s/charts/spotifake --debug
+        run: helm template xhoswi k8s/charts/xhoswi --debug

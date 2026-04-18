@@ -27,7 +27,7 @@ export default function Login({ onLogin }) {
 
   return (
     <div className="login-container">
-      <h1>🎬 Spotifake</h1>
+      <h1>🎬 Xhoswi</h1>
       <h2>{mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}</h2>
       <form onSubmit={handleSubmit} className="login-form">
         <input
