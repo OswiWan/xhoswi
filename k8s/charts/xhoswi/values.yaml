@@ -2,6 +2,18 @@
 namespace: xhoswi
 imagePullPolicy: IfNotPresent
 
+# Postgres para persistencia del auth-service.
+# En DOKS esto se sustituye por un Postgres gestionado: se borra este bloque
+# (postgres.enabled=false) y se apunta PGHOST al endpoint de DigitalOcean.
+postgres:
+  enabled: true
+  image: postgres:16-alpine
+  database: xhoswi
+  user: xhoswi
+  password: dev-postgres-change-me
+  port: 5432
+  storageSize: 1Gi
+
 # Definición de los microservicios
 # Cada uno generará un Deployment + un Service automáticamente
 services:
@@ -13,6 +25,14 @@ services:
     env:
       PORT: "3001"
       JWT_SECRET: dev-secret-change-me
+      # El usuario que se registre con este email queda como admin.
+      # Para cambiar: helm upgrade ... --set services.auth-service.env.ADMIN_EMAIL=otro@correo.com
+      ADMIN_EMAIL: osbalderas11@gmail.com
+      PGHOST: postgres
+      PGPORT: "5432"
+      PGDATABASE: xhoswi
+      PGUSER: xhoswi
+      PGPASSWORD: dev-postgres-change-me
 
   catalog-service:
     image: xhoswi/catalog-service:latest
@@ -22,6 +42,13 @@ services:
     env:
       PORT: "3002"
       STREAMING_BASE_URL: http://localhost:3003
+      # DNS interno de K8s: "auth-service" resuelve al Service del auth en el mismo namespace.
+      AUTH_URL: http://auth-service:3001
+      PGHOST: postgres
+      PGPORT: "5432"
+      PGDATABASE: xhoswi
+      PGUSER: xhoswi
+      PGPASSWORD: dev-postgres-change-me
 
   streaming-service:
     image: xhoswi/streaming-service:latest

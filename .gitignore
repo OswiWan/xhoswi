@@ -34,5 +34,7 @@ services/streaming-service/videos/*
 # Helm
 charts/*.tgz
 
-# Claude
+# Notas locales de desarrollo (no se publican)
 .claude/
+CLAUDE.md
+docs/

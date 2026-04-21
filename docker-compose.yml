@@ -1,24 +1,65 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: xhoswi-postgres
+    environment:
+      POSTGRES_DB: xhoswi
+      POSTGRES_USER: xhoswi
+      POSTGRES_PASSWORD: dev-postgres-change-me
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      # Postgres corre todo .sql en /docker-entrypoint-initdb.d/ al inicializar
+      # el volumen (solo la primera vez). Monto cada schema con un prefijo
+      # numérico para que se apliquen en orden. En K8s equivale al Job db-migrate.
+      - ./services/auth-service/migrations/001_init.sql:/docker-entrypoint-initdb.d/001_auth.sql:ro
+      - ./services/catalog-service/migrations/001_init.sql:/docker-entrypoint-initdb.d/002_catalog.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U xhoswi -d xhoswi"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
   auth-service:
     build: ./services/auth-service
     image: xhoswi/auth-service:latest
     container_name: xhoswi-auth
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
-      - "3001:3001"
+      # 3011 en el Mac → 3001 dentro del contenedor. Usamos 3011 porque el
+      # cluster kind ya ocupa 3001 localmente (lo mapea al NodePort 30001).
+      - "3011:3001"
     environment:
       PORT: 3001
       JWT_SECRET: dev-secret-change-me
+      ADMIN_EMAIL: osbalderas11@gmail.com
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: xhoswi
+      PGUSER: xhoswi
+      PGPASSWORD: dev-postgres-change-me
     restart: unless-stopped
 
   catalog-service:
     build: ./services/catalog-service
     image: xhoswi/catalog-service:latest
     container_name: xhoswi-catalog
+    depends_on:
+      postgres:
+        condition: service_healthy
     ports:
       - "3002:3002"
     environment:
       PORT: 3002
       STREAMING_BASE_URL: http://localhost:3003
+      AUTH_URL: http://auth-service:3001
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: xhoswi
+      PGUSER: xhoswi
+      PGPASSWORD: dev-postgres-change-me
     restart: unless-stopped
 
   streaming-service:
@@ -33,3 +74,6 @@ services:
     volumes:
       - ./services/streaming-service/videos:/app/videos:ro
     restart: unless-stopped
+
+volumes:
+  postgres-data:

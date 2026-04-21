@@ -187,3 +187,70 @@ button:disabled {
   font-size: 1.5rem;
   padding: 8px 16px;
 }
+
+/* Modal genérico para el formulario de añadir video */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+}
+
+.modal-box {
+  background: #1a1a2e;
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-box h2 {
+  margin-bottom: 20px;
+}
+
+.add-video-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.add-video-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+.add-video-form input,
+.add-video-form textarea {
+  padding: 10px 14px;
+  border: 1px solid #333;
+  background: #0f0f1a;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.add-video-form textarea {
+  min-height: 60px;
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+}

@@ -34,3 +34,26 @@ export async function getVideos() {
   if (!res.ok) throw new Error('failed to load catalog');
   return res.json();
 }
+
+export async function createVideo(token, video) {
+  const res = await fetch(`${CATALOG_URL}/videos`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(video),
+  });
+  if (!res.ok) throw new Error((await res.json()).error || 'create failed');
+  return res.json();
+}
+
+export async function deleteVideo(token, id) {
+  const res = await fetch(`${CATALOG_URL}/videos/${id}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok && res.status !== 204) {
+    throw new Error((await res.json()).error || 'delete failed');
+  }
+}

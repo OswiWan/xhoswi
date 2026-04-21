@@ -16,8 +16,8 @@ export default function Login({ onLogin }) {
       if (mode === 'register') {
         await register(email, password);
       }
-      const { token } = await login(email, password);
-      onLogin(token, email);
+      const { token, role } = await login(email, password);
+      onLogin(token, email, role);
     } catch (err) {
       setError(err.message);
     } finally {
